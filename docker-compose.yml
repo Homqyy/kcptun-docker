@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  client:
+    image: homqyy/kcptun-client:1.0-amd64
+    environment:
+      KCPTUN_LOCALADDR: ':10000'
+      KCPTUN_REMOTEADDR: 'server:50000'
+      KCPTUN_MODE: fast3
+      KCPTUN_CRYPT: salsa20
+
+  server:
+    image: homqyy/kcptun-server:1.0-amd64
+    environment:
+      KCPTUN_LISTEN: ':50000'
+      KCPTUN_TARGET: '127.0.0.1:10001'
+      KCPTUN_MODE: fast3
+      KCPTUN_CRYPT: salsa20
