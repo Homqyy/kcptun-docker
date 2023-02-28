@@ -1,5 +1,5 @@
 # KCPTUN
-KCPTUN is a fast and secure tunneling program for transferring data over the internet. It is based on the [KCP protocol](https://github.com/skywind3000/kcp). 
+[KCPTUN](https://github.com/xtaci/kcptun) is a fast and secure tunneling program for transferring data over the internet. It is based on the [KCP protocol](https://github.com/skywind3000/kcp). 
 
 ## Usage
 This Dockerfile contains a script to run KCPTUN with the following environment variables: 
@@ -14,7 +14,6 @@ This Dockerfile contains a script to run KCPTUN with the following environment v
 The script will generate an appropriate command line for KCPTUN based on these environment variables and then execute it.
 
 ### Example
-
 In this example, the KCPTUN-Client is a tunneling protocol that is used to establish a secure connection between the Client and the KCPTUN-Server. The KCPTUN-Server then forwards all traffic from the Client to the Server on port 10001. This allows for secure communication between the two endpoints without exposing any of their internal ports:
 
 ```
@@ -28,7 +27,7 @@ version: '3.8'
 
 services:
   client:
-    image: homqyy/kcptun-client:1.0-amd64
+    image: homqyy/kcptun-client:1.0
     environment:
       KCPTUN_LOCALADDR: ':10000'        # Listener of kcptun-client
       KCPTUN_REMOTEADDR: 'server:50000' # address of kcptun-server
@@ -36,7 +35,7 @@ services:
       KCPTUN_CRYPT: salsa20
 
   server:
-    image: homqyy/kcptun-server:1.0-amd64
+    image: homqyy/kcptun-server:1.0
     environment:
       KCPTUN_LISTEN: ':50000'           # listener of kcptun-server
       KCPTUN_TARGET: '127.0.0.1:10001'  # address of server
@@ -47,6 +46,8 @@ services:
 ## Dockerfile
 
 This Dockerfile is used to build an image for [KCPTUN](https://github.com/xtaci/kcptun).
+
+Support to build on linux/amd64, linux/arm/v7
 
 ### Build Arguments
 * `TARGETOS`: The target operating system, default to `linux`.
