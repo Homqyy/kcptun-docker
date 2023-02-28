@@ -1,13 +1,15 @@
+# syntax=docker/dockerfile:1
 FROM alpine
 
-ARG TARGETOS=linux \
-    TARGETARCH=amd64 \
+ARG TARGETOS \
+    TARGETARCH \
+    TARGETVARIANT \
     TYPE=server
 
 ENV KCPTUN_PROG=/bin/kcptun
 ENV KCPTUN_TYPE=$TYPE
 
-COPY ./src/${TARGETARCH}/${TYPE}_linux_${TARGETARCH} /bin/kcptun
+COPY ./src/${TARGETARCH}/${TARGETVARIANT}/kcptun_${TYPE}_linux /bin/kcptun
 COPY ./start.sh /bin/start
 
 RUN chmod +x /bin/start /bin/kcptun

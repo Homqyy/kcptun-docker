@@ -74,14 +74,23 @@ docker run --name kcptun -d homqyy/kcptun start <args>   # replace <args> with y
 
 ## Example for Building Image
 
-Build Client Image:
+### Configure Build Environment
 
-```sh
-docker build -f Dockerfile -t homqyy/kcptun-client:1.0-amd64 --platform=linux/amd64 --build-arg "TYPE=client" .
+```bash
+docker run --privileged --rm tonistiigi/binfmt --install all
+docker buildx create --name mybuilder --driver docker-container --bootstrap
+docker buildx use mybuilder
 ```
 
-Build Server Image:
+### Build Client Image:
 
 ```sh
-docker build -f Dockerfile -t homqyy/kcptun-server:1.0-amd64 --platform=linux/amd64 --build-arg "TYPE=server" .
+docker buildx build --platform=linux/amd64,linux/arm/v7 -t homqyy/kcptun-client:1.0 --build-arg "TYPE=client" --push  .
 ```
+
+### Build Server Image:
+
+```sh
+docker buildx build --platform=linux/amd64,linux/arm/v7 -t homqyy/kcptun-server:1.0 --build-arg "TYPE=server" --push  .
+```
+
